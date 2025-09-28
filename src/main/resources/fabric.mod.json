@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "last-base-standing",
+	"version": "${version}",
+	"name": "Last Base Standing",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/last-base-standing/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "net.rockystudios.lastbasestanding.LastBaseStanding",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "net.rockystudios.lastbasestanding.LastBaseStandingClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
