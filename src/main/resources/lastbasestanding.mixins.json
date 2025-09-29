@@ -3,7 +3,8 @@
   "package": "net.rockystudios.lastbasestanding.mixin",
 
   "mixins": [
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "ExplosionMixin"
   ],
   "client": [
     "ClientPlayerInteractionManagerMixin"
