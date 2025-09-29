@@ -30,7 +30,8 @@
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
+		"fabric-language-kotlin": "*",
+		"ftbteams": ">=2004.1.2"
 	},
 	"suggests": {
 		"another-mod": "*"

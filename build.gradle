@@ -17,6 +17,28 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	//maven("https://maven.shedaniel.me/" as Action<? super MavenArtifactRepository>)
+	//maven("https://maven.blamejared.com/" as Action<? super MavenArtifactRepository>)
+	//maven("https://maven.latmod.com/" as Action<? super MavenArtifactRepository>)
+
+	//maven {
+	//	name = "LatMod"
+	//	url = "https://maven.latmod.com"
+	//}
+	mavenCentral()
+	mavenLocal()
+	maven {
+		name = "BlameJared"
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		name = "Shedaniel"
+		url = "https://maven.shedaniel.me/"
+	}
+	maven {
+		name = "ftbMavenReleases"
+		url = "https://maven.ftb.dev/releases"
+	}
 }
 
 loom {
@@ -46,6 +68,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+	modImplementation "dev.ftb.mods:ftb-teams-fabric:2004.1.2"
 }
 
 processResources {
