@@ -1,0 +1,5 @@
+{
+  "prefix": "custom/",
+  "source": "overlay",
+  "type": "directory"
+}
