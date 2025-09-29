@@ -1,4 +1,4 @@
-package net.rockystudios.lastbasestanding
+package net.rockystudios.lastbasestanding.hardening
 
 import net.minecraft.util.math.BlockPos
 
