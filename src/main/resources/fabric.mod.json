@@ -20,14 +20,11 @@
 				"value": "net.rockystudios.lastbasestanding.LastBaseStanding",
 				"adapter": "kotlin"
 			}
-		],
-		"client": [
-			{
-				"value": "net.rockystudios.lastbasestanding.LastBaseStandingClient",
-				"adapter": "kotlin"
-			}
 		]
 	},
+	"mixins": [
+		"lastbasestanding.mixins.json"
+	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
 		"minecraft": "~1.20.4",

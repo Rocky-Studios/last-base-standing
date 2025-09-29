@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.rockystudios.lastbasestanding.mixin",
+
+  "mixins": [
+    "PlayerEntityMixin"
+  ],
+  "client": [
+    "ClientPlayerInteractionManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

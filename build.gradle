@@ -101,3 +101,18 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', 'src/main/kotlin']
+		}
+	}
+	client {
+		java {
+			srcDirs = ['src/client/java', 'src/client/kotlin']
+		}
+		compileClasspath += main.output
+		runtimeClasspath += main.output
+	}
+}
