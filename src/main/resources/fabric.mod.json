@@ -3,15 +3,13 @@
 	"id": "last-base-standing",
 	"version": "${version}",
 	"name": "Last Base Standing",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A competitive team-based Minecraft mod where each team begins with a unique trophy, and the ultimate goal is to collect every other team's trophy while completing a series of high-stakes challenges: securing the dragon egg (which cannot be stored in an ender chest), constructing a fully powered beacon, and finally revealing your base coordinates to the world. Once revealed, your team must remain at that base and defend it for 24 real-world hours—battles are only allowed during the day. Victory is earned not just through conquest, but through endurance, coordination, and the ability to hold your ground when everyone knows exactly where you are.",
 	"authors": [
-		"Me!"
+		"GoogleCoder"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/RockyStudios/last-base-standing"
 	},
-	"license": "CC0-1.0",
 	"icon": "assets/last-base-standing/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -38,8 +36,5 @@
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*",
 		"ftbteams": ">=2004.1.2"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
