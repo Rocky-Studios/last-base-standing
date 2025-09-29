@@ -1,6 +1,8 @@
 package net.rockystudios.lastbasestanding.hardening
 
+import dev.architectury.event.events.common.TickEvent.Player
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
@@ -8,13 +10,45 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 import java.util.concurrent.ConcurrentHashMap
 
 object HardeningHandler {
     private val hardenedBlocks = ConcurrentHashMap.newKeySet<HardenedBlock>()
 
-    fun harden(hardenedBlock: HardenedBlock) {
-        hardenedBlocks.add(hardenedBlock)
+    fun harden(hardenedBlock: HardenedBlock, world: World, player: PlayerEntity) {
+        val blockPos = hardenedBlock.position
+        if (isHardened(blockPos)) {
+
+            val newMaterial = hardenedBlock.material
+            val oldMaterial = getHardenedBlock(blockPos).material
+
+            if(oldMaterial == newMaterial)
+            {
+                player.sendMessage(Text.of("Block is already hardened with ${newMaterial.item.name.string}!"), true)
+                return
+            }
+            else if(newMaterial.hardness > oldMaterial.hardness)
+            {
+                hardenedBlocks.removeIf { it.position == blockPos }
+                hardenedBlocks.add(hardenedBlock)
+                var blockName = world.getBlockState(blockPos).block.name.string;
+                var hardeningMaterial = hardenedBlock.material
+
+                player.sendMessage(Text.of("$blockName re-hardened with ${hardeningMaterial.item.name.string}! Hardness: ${hardeningMaterial.hardness}"), true)
+                return
+            }
+            return
+        }
+        else
+        {
+            hardenedBlocks.add(hardenedBlock)
+            var blockName = world.getBlockState(blockPos).block.name.string;
+            var hardeningMaterial = hardenedBlock.material
+
+            player.sendMessage(Text.of("$blockName hardened with ${hardeningMaterial.item.name.string}! Hardness: ${hardeningMaterial.hardness}"), true)
+        }
+
     }
 
     fun getHardenedBlock(pos: BlockPos): HardenedBlock {
@@ -42,14 +76,9 @@ object HardeningHandler {
                             HardenedBlock(
                                 pos.toImmutable(),
                                 hardeningMaterial
-                            )
+                            ), world, player
                         )
 
-                        var blockName = world.getBlockState(pos).block.name.string;
-
-                        var blockHardeningText = Text.of("$blockName hardened with ${hardeningMaterial.item.name.string}! Hardness: ${hardeningMaterial.hardness}")
-
-                        player.sendMessage(blockHardeningText, true)
 
                         // Spawn particles at the block position (server-side)
                         if (world is ServerWorld) {
