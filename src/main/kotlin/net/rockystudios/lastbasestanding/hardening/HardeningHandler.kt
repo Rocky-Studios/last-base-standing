@@ -63,6 +63,9 @@ object HardeningHandler {
 
         UseBlockCallback.EVENT.register(UseBlockCallback { player, world, hand, hitResult ->
             if (!world.isClient) {
+                val blockState = world.getBlockState(hitResult.blockPos)
+                if (!blockState.isSolidBlock(world, hitResult.blockPos)) return@UseBlockCallback ActionResult.PASS
+                if (!blockState.isOpaqueFullCube(world, hitResult.blockPos)) return@UseBlockCallback ActionResult.PASS
 
                 var itemPlayerIsHolding = player.getStackInHand(hand).item
 
