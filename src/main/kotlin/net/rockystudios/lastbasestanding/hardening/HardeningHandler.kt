@@ -76,4 +76,8 @@ object HardeningHandler {
             }
         })
     }
+
+    fun getHardenedBlockPositions(): Set<BlockPos> {
+        return hardenedBlocks.map { it.position }.toSet()
+    }
 }

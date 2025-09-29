@@ -20,6 +20,12 @@
 				"value": "net.rockystudios.lastbasestanding.LastBaseStanding",
 				"adapter": "kotlin"
 			}
+		],
+		"client": [
+			{
+				"value": "net.rockystudios.lastbasestanding.LastBaseStandingClient",
+				"adapter": "kotlin"
+			}
 		]
 	},
 	"mixins": [
