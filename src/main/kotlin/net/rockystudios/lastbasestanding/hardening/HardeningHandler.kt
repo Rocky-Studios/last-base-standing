@@ -1,10 +1,8 @@
 package net.rockystudios.lastbasestanding.hardening
 
-import dev.architectury.event.events.common.TickEvent.Player
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.Items
+import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
@@ -27,15 +25,16 @@ object HardeningHandler {
             {
                 player.sendMessage(Text.of("Block is already hardened with ${newMaterial.item.name.string}!"), true)
                 return
-            }
-            else if(newMaterial.hardness > oldMaterial.hardness)
+            } else if (newMaterial.hardness != oldMaterial.hardness)
             {
                 hardenedBlocks.removeIf { it.position == blockPos }
                 hardenedBlocks.add(hardenedBlock)
-                var blockName = world.getBlockState(blockPos).block.name.string;
+                var blockName = world.getBlockState(blockPos).block.name.string
                 var hardeningMaterial = hardenedBlock.material
 
                 player.sendMessage(Text.of("$blockName re-hardened with ${hardeningMaterial.item.name.string}! Hardness: ${hardeningMaterial.hardness}"), true)
+                if (!player.abilities.creativeMode) player.giveItemStack(ItemStack(oldMaterial.item, 1))
+
                 return
             }
             return
@@ -43,7 +42,7 @@ object HardeningHandler {
         else
         {
             hardenedBlocks.add(hardenedBlock)
-            var blockName = world.getBlockState(blockPos).block.name.string;
+            var blockName = world.getBlockState(blockPos).block.name.string
             var hardeningMaterial = hardenedBlock.material
 
             player.sendMessage(Text.of("$blockName hardened with ${hardeningMaterial.item.name.string}! Hardness: ${hardeningMaterial.hardness}"), true)
@@ -65,7 +64,7 @@ object HardeningHandler {
         UseBlockCallback.EVENT.register(UseBlockCallback { player, world, hand, hitResult ->
             if (!world.isClient) {
 
-                var itemPlayerIsHolding = player.getStackInHand(hand).item;
+                var itemPlayerIsHolding = player.getStackInHand(hand).item
 
                 for (hardeningMaterial in HardeningMaterial.materials) {
 
@@ -78,7 +77,7 @@ object HardeningHandler {
                                 hardeningMaterial
                             ), world, player
                         )
-
+                        if (!player.abilities.creativeMode) player.getStackInHand(hand).decrement(1)
 
                         // Spawn particles at the block position (server-side)
                         if (world is ServerWorld) {
