@@ -9,6 +9,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.rockystudios.lastbasestanding.items.ModItems
 import java.util.concurrent.ConcurrentHashMap
 
 object HardeningHandler {
@@ -27,7 +28,7 @@ object HardeningHandler {
                 return
             } else if (newMaterial.hardness != oldMaterial.hardness)
             {
-                hardenedBlocks.removeIf { it.position == blockPos }
+                unharden(blockPos, player)
                 hardenedBlocks.add(hardenedBlock)
                 var blockName = world.getBlockState(blockPos).block.name.string
                 var hardeningMaterial = hardenedBlock.material
@@ -50,6 +51,13 @@ object HardeningHandler {
 
     }
 
+    fun unharden(pos: BlockPos, player: PlayerEntity): Boolean {
+        val material = if (isHardened(pos)) getHardenedBlock(pos).material else return false
+        if (!player.abilities.creativeMode) player.giveItemStack(ItemStack(material.item, 1))
+
+        return hardenedBlocks.removeIf { it.position == pos.toImmutable() }
+    }
+
     fun getHardenedBlock(pos: BlockPos): HardenedBlock {
         return hardenedBlocks.first { it.position == pos.toImmutable()}
     }
@@ -60,7 +68,6 @@ object HardeningHandler {
 
     fun initHardening()
     {
-
         UseBlockCallback.EVENT.register(UseBlockCallback { player, world, hand, hitResult ->
             if (!world.isClient) {
                 val blockState = world.getBlockState(hitResult.blockPos)
@@ -69,9 +76,12 @@ object HardeningHandler {
 
                 var itemPlayerIsHolding = player.getStackInHand(hand).item
 
+                if (itemPlayerIsHolding == ModItems.HAMMER) {
+                    unharden(hitResult.blockPos, player)
+                    player.sendMessage(Text.of("Block unhardened!"), true)
+                }
+
                 for (hardeningMaterial in HardeningMaterial.materials) {
-
-
                     if (itemPlayerIsHolding == hardeningMaterial.item) {
                         val pos = hitResult.blockPos
                         harden(
