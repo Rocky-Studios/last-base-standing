@@ -1,11 +1,10 @@
 package net.rockystudios.lastbasestanding.mixin;
 
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.inventory.DoubleInventory;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
+import net.rockystudios.lastbasestanding.items.ItemsNotAllowedInContainers;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,23 +25,22 @@ public abstract class MixinScreenHandlerInsert {
             boolean fromLast,
             CallbackInfoReturnable<Boolean> cir
     ) {
-        if (stack.isOf(Items.DRAGON_EGG)) {
-            ScreenHandler self = (ScreenHandler) (Object) this;
 
-            // Figure out if the target range is a chest
-            for (int i = startIndex; i < endIndex && i < self.slots.size(); i++) {
-                var slot = self.slots.get(i);
-                Inventory inv = slot.inventory;
+        ItemsNotAllowedInContainers.Companion.getItemsNotAllowedInContainers().forEach(item -> {
+            if (stack.isOf(item)) {
+                ScreenHandler self = (ScreenHandler) (Object) this;
 
-                boolean isChest = inv instanceof ChestBlockEntity
-                        || (inv instanceof DoubleInventory);//di &&
-                //(di.getFirst() instanceof ChestBlockEntity || di.getSecond() instanceof ChestBlockEntity));
+                // Figure out if the target range is a chest
+                for (int i = startIndex; i < endIndex && i < self.slots.size(); i++) {
+                    var slot = self.slots.get(i);
+                    Inventory inv = slot.inventory;
 
-                if (isChest) {
-                    cir.setReturnValue(false); // cancel shift-click
-                    return;
+                    if (!(inv instanceof PlayerInventory)) {
+                        cir.setReturnValue(false); // cancel shift-click
+                        return;
+                    }
                 }
             }
-        }
+        });
     }
 }
