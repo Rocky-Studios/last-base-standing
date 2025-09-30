@@ -1,5 +1,7 @@
 package net.rockystudios.lastbasestanding.render
 
+import dev.ftb.mods.ftbteams.api.FTBTeamsAPI
+import dev.ftb.mods.ftbteams.data.AbstractTeamBase
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.MinecraftClient
@@ -11,6 +13,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import net.minecraft.util.math.RotationAxis
 import net.rockystudios.lastbasestanding.blockentity.TrophyBlockEntity
+import java.util.*
 
 @Environment(EnvType.CLIENT)
 class TrophyBlockEntityRenderer(context: BlockEntityRendererFactory.Context) :
@@ -37,13 +40,24 @@ class TrophyBlockEntityRenderer(context: BlockEntityRendererFactory.Context) :
 
         // Scale down the text
         matrices.scale(-0.025f, -0.025f, 0.025f)
+        var text = "Trophy"
+        try {
+            val teamIDString = entity.teamId
+            val teamUUID = try {
+                UUID.fromString(teamIDString?.trim())
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+            val teamName = (FTBTeamsAPI.api().manager.getTeamByID(teamUUID).get() as AbstractTeamBase).displayName
+            text = "$teamName"
+        } catch (e: Exception) {
 
-        val text = Text.literal("Trophy")
+        }
         val textRenderer = MinecraftClient.getInstance().textRenderer
         val x = -textRenderer.getWidth(text) / 2
 
         textRenderer.draw(
-            text,
+            Text.literal(text),
             x.toFloat(),
             0f,
             0xFFFFFF,

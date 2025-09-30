@@ -12,4 +12,5 @@ object ModBlocks {
     fun register() {
         Registry.register(Registries.BLOCK, Identifier(LastBaseStanding.MOD_ID, "trophy"), TROPHY)
     }
+
 }
