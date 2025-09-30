@@ -1,79 +1,94 @@
 {
-  "parent": "block/block",
-  "format_version": "1.9.0",
-  "credit": "Made with Blockbench",
-  "textures": {
-    "0": "block/gold_block",
-    "particle": "block/gold_block"
-  },
-  "elements": [
-    {
-      "from": [
-        4,
-        4,
-        4
-      ],
-      "to": [
-        12,
-        12,
-        12
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            8,
-            8
-          ],
-          "texture": "#0"
-        }
-      }
-    }
-  ]
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "last-base-standing:block/trophy",
+		"particle": "last-base-standing:block/trophy"
+	},
+	"elements": [
+		{
+			"from": [
+				4,
+				4,
+				4
+			],
+			"to": [
+				12,
+				12,
+				12
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"down": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [
+				45,
+				45,
+				0
+			]
+		},
+		"head": {
+			"translation": [
+				0,
+				10.5,
+				0
+			]
+		}
+	}
 }
