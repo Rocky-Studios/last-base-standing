@@ -5,6 +5,8 @@ import net.fabricmc.api.ModInitializer
 import net.rockystudios.lastbasestanding.blockentity.ModBlockEntities
 import net.rockystudios.lastbasestanding.hardening.HardeningHandler
 import net.rockystudios.lastbasestanding.items.ModItems
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object LastBaseStanding : ModInitializer {
 
@@ -15,6 +17,9 @@ object LastBaseStanding : ModInitializer {
 		HardeningHandler.initHardening()
 	}
 
+	private val logger = LoggerFactory.getLogger("last-base-standing")
+	fun getLogger(): Logger {
+		return logger
+	}
 	const val MOD_ID = "last-base-standing"
-
 }
