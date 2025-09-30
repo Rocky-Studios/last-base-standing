@@ -1,6 +1,7 @@
 package net.rockystudios.lastbasestanding.mixin;
 
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.inventory.DoubleInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
@@ -25,22 +26,18 @@ public abstract class MixinScreenHandlerInsert {
             boolean fromLast,
             CallbackInfoReturnable<Boolean> cir
     ) {
-
-        ItemsNotAllowedInContainers.Companion.getItemsNotAllowedInContainers().forEach(item -> {
-            if (stack.isOf(item)) {
-                ScreenHandler self = (ScreenHandler) (Object) this;
-
-                // Figure out if the target range is a chest
-                for (int i = startIndex; i < endIndex && i < self.slots.size(); i++) {
-                    var slot = self.slots.get(i);
-                    Inventory inv = slot.inventory;
-
-                    if (!(inv instanceof PlayerInventory)) {
-                        cir.setReturnValue(false); // cancel shift-click
-                        return;
-                    }
+        if (ItemsNotAllowedInContainers.Companion.getItemsNotAllowedInContainers().stream().anyMatch(stack::isOf)) {
+            ScreenHandler self = (ScreenHandler) (Object) this;
+            for (int i = startIndex; i < endIndex && i < self.slots.size(); i++) {
+                var slot = self.slots.get(i);
+                Inventory inv = slot.inventory;
+                // Only allow inserting into chests
+                if (!(inv instanceof ChestBlockEntity || inv instanceof DoubleInventory)) {
+                    cir.setReturnValue(false); // cancel shift-click
+                    return;
                 }
             }
-        });
+        }
     }
 }
+
