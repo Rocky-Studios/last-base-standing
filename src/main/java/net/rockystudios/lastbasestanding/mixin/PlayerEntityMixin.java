@@ -1,5 +1,4 @@
 package net.rockystudios.lastbasestanding.mixin;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

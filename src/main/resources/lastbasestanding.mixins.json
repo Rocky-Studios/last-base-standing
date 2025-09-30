@@ -3,6 +3,8 @@
   "package": "net.rockystudios.lastbasestanding.mixin",
   "mixins": [
     "ExplosionMixin",
+    "MixinScreenHandler",
+    "MixinScreenHandlerInsert",
     "PlayerEntityMixin",
     "TeamManagerImplMixin"
   ],
